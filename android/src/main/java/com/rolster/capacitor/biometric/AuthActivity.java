@@ -1,28 +1,17 @@
 package com.rolster.capacitor.biometric;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.biometric.BiometricConstants;
 import androidx.biometric.BiometricPrompt;
-
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-
-import com.rolster.capacitor.biometric.R;
-
 import java.util.concurrent.Executor;
 
 public class AuthActivity extends AppCompatActivity {
-
     private Executor executor;
     private int maxAttempts;
     private int counter = 0;
@@ -34,9 +23,9 @@ public class AuthActivity extends AppCompatActivity {
 
         maxAttempts = getIntent().getIntExtra("maxAttempts", 1);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             executor = this.getMainExecutor();
-        }else{
+        } else {
             executor = new Executor() {
                 @Override
                 public void execute(Runnable command) {
@@ -46,9 +35,9 @@ public class AuthActivity extends AppCompatActivity {
         }
 
         BiometricPrompt.PromptInfo.Builder builder = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle(getIntent().hasExtra("title") ? getIntent().getStringExtra("title") : "Authenticate")
-                .setSubtitle(getIntent().hasExtra("subtitle") ? getIntent().getStringExtra("subtitle") : null)
-                .setDescription(getIntent().hasExtra("description") ? getIntent().getStringExtra("description") : null);
+            .setTitle(getIntent().hasExtra("title") ? getIntent().getStringExtra("title") : "Authenticate")
+            .setSubtitle(getIntent().hasExtra("subtitle") ? getIntent().getStringExtra("subtitle") : null)
+            .setDescription(getIntent().hasExtra("description") ? getIntent().getStringExtra("description") : null);
 
         boolean useFallback = getIntent().getBooleanExtra("useFallback", false);
 
@@ -81,13 +70,13 @@ public class AuthActivity extends AppCompatActivity {
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
                 counter++;
-                if(counter == maxAttempts)
+                if (counter == maxAttempts) {
                     finishActivity("failed", 10, "Authentication failed.");
+                }
             }
         });
 
         biometricPrompt.authenticate(promptInfo);
-
     }
 
     void finishActivity(String result) {
@@ -97,12 +86,15 @@ public class AuthActivity extends AppCompatActivity {
     void finishActivity(String result, Integer errorCode, String errorDetails) {
         Intent intent = new Intent();
         intent.putExtra("result", result);
+
         if (errorCode != null) {
             intent.putExtra("errorCode", String.valueOf(errorCode));
         }
+
         if (errorDetails != null) {
             intent.putExtra("errorDetails", errorDetails);
         }
+
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -114,6 +106,7 @@ public class AuthActivity extends AppCompatActivity {
      * @see https://developer.android.com/reference/androidx/biometric/BiometricPrompt#constants
      * @return BiometricAuthError
      */
+    @SuppressLint("RestrictedApi")
     public static int convertToPluginErrorCode(int errorCode) {
         switch (errorCode) {
             case BiometricConstants.ERROR_HW_UNAVAILABLE:
@@ -139,5 +132,4 @@ public class AuthActivity extends AppCompatActivity {
                 return 0;
         }
     }
-
 }
