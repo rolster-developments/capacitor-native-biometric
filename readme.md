@@ -2,9 +2,13 @@
 
 Use biometrics confirm device owner presence or authenticate users. A couple of methods are provided to handle user credentials. These are securely stored using Keychain (iOS) and Keystore (Android).
 
-## Installation (Only supports Capacitor 5)
+## Installation
 
-- `npm i @rolster/capacitor-native-biometric`
+Package only supports Capacitor 5
+
+```
+npm i @rolster/capacitor-native-biometric
+```
 
 ## Usage
 
