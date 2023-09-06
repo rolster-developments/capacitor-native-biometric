@@ -1,4 +1,4 @@
-# Rolster Native Biometric
+# Rolster Capacitor Native Biometric
 
 Use biometrics confirm device owner presence or authenticate users. A couple of methods are provided to handle user credentials. These are securely stored using Keychain (iOS) and Keystore (Android).
 
@@ -147,7 +147,6 @@ This is a plugin specific list of error codes that can be thrown on verifyIdenti
 ## Face ID (iOS)
 
 To use FaceID Make sure to provide a value for NSFaceIDUsageDescription, otherwise your app may crash on iOS devices with FaceID.
-
 This value is just the reason for using FaceID. You can add something like the following example to App/info.plist:
 
 ```xml
