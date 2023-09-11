@@ -1,6 +1,6 @@
 {
   "name": "@rolster/capacitor-native-biometric",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Plugin to provide access to native biometric APIs for Android and iOS",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

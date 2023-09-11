@@ -42,7 +42,7 @@ public class NativeBiometric: CAPPlugin {
                 case .faceID:
                     obj["biometryType"] = 2
                 default:
-                    obj["biomertryType"] = 0
+                    obj["biometryType"] = 0
             }
             
             obj["isAvailable"] = true
@@ -57,10 +57,9 @@ public class NativeBiometric: CAPPlugin {
             obj["errorCode"] = pluginErrorCode
             call.resolve(obj)
         }
-                        
     }
     
-    @objc func verifyIdentity(_ call: CAPPluginCall){
+    @objc func verifyIdentity(_ call: CAPPluginCall) {
         let context = LAContext()
         var canEvaluateError: NSError?
 
@@ -76,12 +75,10 @@ public class NativeBiometric: CAPPlugin {
         
         let policy = useFallback ? LAPolicy.deviceOwnerAuthentication : LAPolicy.deviceOwnerAuthenticationWithBiometrics
         
-        if context.canEvaluatePolicy(policy, error: &canEvaluateError){
-            
+        if context.canEvaluatePolicy(policy, error: &canEvaluateError) {
             let reason = call.getString("reason") ?? "For biometric authentication"
 
             context.evaluatePolicy(policy, localizedReason: reason) { (success, evaluateError) in
-                
                 if success {
                     call.resolve()
                 } else {
@@ -94,9 +91,7 @@ public class NativeBiometric: CAPPlugin {
                     // use pluginErrorCode.description to convert Int to String 
                     call.reject(error.localizedDescription, pluginErrorCode.description, error )
                 }
-                
             }
-            
         } else {
             call.reject("Authentication not available")
         }
@@ -107,6 +102,7 @@ public class NativeBiometric: CAPPlugin {
             call.reject("No server name was provided")
             return
         }
+        
         do {
             let credentials = try getCredentialsFromKeychain(server)
             var obj = JSObject()
@@ -119,7 +115,6 @@ public class NativeBiometric: CAPPlugin {
     }
     
     @objc func setCredentials(_ call: CAPPluginCall) {
-        
         guard let server = call.getString("server"), let username = call.getString("username"), let password = call.getString("password") else {
             call.reject("Missing properties")
             return;
@@ -127,7 +122,7 @@ public class NativeBiometric: CAPPlugin {
         
         let credentials = Credentials(username: username, password: password)
         
-        do{
+        do {
             try storeCredentialsInKeychain(credentials, server)
             call.resolve()
         } catch KeychainError.duplicateItem {

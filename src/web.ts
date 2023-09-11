@@ -11,10 +11,6 @@ import {
 } from './definitions';
 
 export class NativeBiometricWeb extends WebPlugin implements NativeBiometricPlugin {
-  constructor() {
-    super();
-  }
-
   public isAvailable(): Promise<AvailableResult> {
     return Promise.resolve({
       biometryType: BiometryType.NONE,
@@ -23,18 +19,18 @@ export class NativeBiometricWeb extends WebPlugin implements NativeBiometricPlug
   }
 
   public verifyIdentity(_?: BiometricOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new Error('Plugin web NativeBiometric method not implemented.');
   }
 
   public getCredentials(_: GetCredentialOptions): Promise<Credentials> {
-    throw new Error('Method not implemented.');
+    throw new Error('Plugin web NativeBiometric method not implemented.');
   }
 
   public setCredentials(_: SetCredentialOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new Error('Plugin web NativeBiometric method not implemented.');
   }
 
   public deleteCredentials(_: DeleteCredentialOptions): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new Error('Plugin web NativeBiometric method not implemented.');
   }
 }
