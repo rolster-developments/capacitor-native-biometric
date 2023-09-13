@@ -53,7 +53,7 @@ public class NativeBiometric: CAPPlugin {
                 call.resolve(obj)
                 return
             }
-            var pluginErrorCode = convertToPluginErrorCode(authError.code)
+            let pluginErrorCode = convertToPluginErrorCode(authError.code)
             obj["errorCode"] = pluginErrorCode
             call.resolve(obj)
         }
@@ -87,7 +87,7 @@ public class NativeBiometric: CAPPlugin {
                         return
                     }
                     
-                    var pluginErrorCode = self.convertToPluginErrorCode(error._code)
+                    let pluginErrorCode = self.convertToPluginErrorCode(error._code)
                     // use pluginErrorCode.description to convert Int to String 
                     call.reject(error.localizedDescription, pluginErrorCode.description, error )
                 }
