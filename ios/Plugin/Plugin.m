@@ -3,7 +3,7 @@
 
 // Define the plugin using the CAP_PLUGIN Macro, and
 // each method the plugin supports using the CAP_PLUGIN_METHOD macro.
-CAP_PLUGIN(NativeBiometric, "NativeBiometric",
+CAP_PLUGIN(NativeBiometricPlugin, "NativeBiometric",
   CAP_PLUGIN_METHOD(isAvailable, CAPPluginReturnPromise);
   CAP_PLUGIN_METHOD(verifyIdentity, CAPPluginReturnPromise);
   CAP_PLUGIN_METHOD(getCredentials, CAPPluginReturnPromise);

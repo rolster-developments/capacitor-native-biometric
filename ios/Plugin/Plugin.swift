@@ -7,8 +7,8 @@ import LocalAuthentication
  * here: https://capacitor.ionicframework.com/docs/plugins/ios
  */
 
-@objc(NativeBiometric)
-public class NativeBiometric: CAPPlugin {
+@objc(NativeBiometricPlugin)
+public class NativeBiometricPlugin: CAPPlugin {
     
     struct Credentials {
         var username: String
@@ -30,19 +30,19 @@ public class NativeBiometric: CAPPlugin {
         var obj = JSObject()
         
         obj["isAvailable"] = false
-        obj["biometryType"] = 0
+        obj["biometricType"] = 0
 
         let useFallback = call.getBool("useFallback", false)
         let policy = useFallback ? LAPolicy.deviceOwnerAuthentication : LAPolicy.deviceOwnerAuthenticationWithBiometrics
         
         if context.canEvaluatePolicy(policy, error: &error){
-            switch context.biometryType {
+            switch context.biometricType {
                 case .touchID:
-                    obj["biometryType"] = 1
+                    obj["biometricType"] = 1
                 case .faceID:
-                    obj["biometryType"] = 2
+                    obj["biometricType"] = 2
                 default:
-                    obj["biometryType"] = 0
+                    obj["biometricType"] = 0
             }
             
             obj["isAvailable"] = true

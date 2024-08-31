@@ -2,4 +2,3 @@
 /dist
 /node_modules
 *.tgz
-package-lock.json

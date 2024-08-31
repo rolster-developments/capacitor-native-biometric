@@ -1,8 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
 import {
-  AvailableResult,
-  BiometricOptions,
-  BiometryType,
+  IsAvailableResult,
+  VerifyIdentityOptions,
+  BiometricType,
   Credentials,
   DeleteCredentialOptions,
   GetCredentialOptions,
@@ -11,14 +11,14 @@ import {
 } from './definitions';
 
 export class NativeBiometricWeb extends WebPlugin implements NativeBiometricPlugin {
-  public isAvailable(): Promise<AvailableResult> {
+  public isAvailable(): Promise<IsAvailableResult> {
     return Promise.resolve({
-      biometryType: BiometryType.NONE,
+      biometricType: BiometricType.NONE,
       isAvailable: false
     });
   }
 
-  public verifyIdentity(_?: BiometricOptions): Promise<void> {
+  public verifyIdentity(_?: VerifyIdentityOptions): Promise<void> {
     throw new Error('Plugin web NativeBiometric method not implemented.');
   }
 

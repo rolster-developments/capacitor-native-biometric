@@ -1,4 +1,4 @@
-export enum BiometryType {
+export enum BiometricType {
   // Android, iOS
   NONE = 0,
   // iOS
@@ -27,13 +27,13 @@ export interface IsAvailableOptions {
   useFallback: boolean;
 }
 
-export interface AvailableResult {
-  biometryType: BiometryType;
+export interface IsAvailableResult {
+  biometricType: BiometricType;
   isAvailable: boolean;
   errorCode?: number;
 }
 
-export interface BiometricOptions {
+export interface VerifyIdentityOptions {
   description?: string;
   /**
    * Only for iOS.
@@ -88,9 +88,9 @@ export enum BiometricAuthError {
 }
 
 export interface NativeBiometricPlugin {
-  isAvailable(options?: IsAvailableOptions): Promise<AvailableResult>;
+  isAvailable(options?: IsAvailableOptions): Promise<IsAvailableResult>;
 
-  verifyIdentity(options?: BiometricOptions): Promise<void>;
+  verifyIdentity(options?: VerifyIdentityOptions): Promise<void>;
 
   getCredentials(options: GetCredentialOptions): Promise<Credentials>;
 

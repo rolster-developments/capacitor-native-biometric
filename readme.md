@@ -4,7 +4,7 @@ Use biometrics confirm device owner presence or authenticate users. A couple of 
 
 ## Installation
 
-Package only supports Capacitor 5
+Package only supports Capacitor 6
 
 ```
 npm i @rolster/capacitor-native-biometric
@@ -13,13 +13,13 @@ npm i @rolster/capacitor-native-biometric
 ## Usage
 
 ```ts
-import { NativeBiometric } from "@rolster/capacitor-native-biometric";
+import { BiometricType, NativeBiometric } from "@rolster/capacitor-native-biometric";
 
-async performBiometricVerificatin() {
+async performBiometricVerificate() {
   const result = await NativeBiometric.isAvailable();
 
   if (result.isAvailable) {
-    const isFaceID = result.biometryType == BiometryType.FACE_ID;
+    const isFaceID = result.biometricType == BiometricType.FACE_ID;
 
     const verified = await NativeBiometric.verifyIdentity({
       reason: "For easy log in",
@@ -56,7 +56,7 @@ NativeBiometric.deleteCredentials({
 | Method                                                | Default | Type                       | Description                                                                                   |
 | ----------------------------------------------------- | ------- | -------------------------- | --------------------------------------------------------------------------------------------- |
 | `isAvailable(options?: IsAvailableOptions)`           |         | `Promise<AvailableResult>` | Gets available biometrics                                                                     |
-| `verifyIdentity(options?: BiometricOptions)`          |         | `Promise<void>`            | Shows biometric prompt                                                                        |
+| `verifyIdentity(options?: VerifyIdentityOptions)`          |         | `Promise<void>`            | Shows biometric prompt                                                                        |
 | `setCredentials(options: SetCredentialOptions)`       |         | `Promise<void>`            | Securely stores user's credentials in Keychain (iOS) or encypts them using Keystore (Android) |
 | `getCredentials(options: GetCredentialOptions)`       |         | `Promise<Credentials>`     | Retrieves user's credentials if any                                                           |
 | `deleteCredentials(options: DeleteCredentialOptions)` |         | `Promise<void>`            | Removes user's credentials if any                                                             |
@@ -74,10 +74,10 @@ NativeBiometric.deleteCredentials({
 | Properties     | Default | Type           | Description                                              |
 | -------------- | ------- | -------------- | -------------------------------------------------------- |
 | `isAvailable`  |         | `boolean`      | Specifies if the devices has biometric enrollment        |
-| `biometryType` |         | `BiometryType` | Specifies the available biometric hardware on the device |
+| `biometricType` |         | `BiometryType` | Specifies the available biometric hardware on the device |
 | `errorCode?`   |         | `number`       | Biometric Auth Error Code                                |
 
-### BiometryType - enum
+### BiometricType - enum
 
 | Properties            | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -89,7 +89,7 @@ NativeBiometric.deleteCredentials({
 | `IRIS_AUTHENTICATION` | Iris Authentication is available (Android)                                                                                    |
 | `MULTIPLE`            | Returned when device has multiple biometric features. Currently there is no way of knowing which one is being used. (Android) |
 
-### BiometricOptions
+### VerifyIdentityOptions
 
 | Properties            | Default                        | Type      | Description                                                                                               |
 | --------------------- | ------------------------------ | --------- | --------------------------------------------------------------------------------------------------------- |
@@ -169,12 +169,12 @@ To use android's BiometricPrompt api you must add the following permission to yo
 And register the plugin by adding it to you MainActivity's onCreate:
 
 ```java
-import com.rolster.capacitor.biometric.NativeBiometric;
+import com.rolster.capacitor.biometric.NativeBiometricPlugin;
 
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    registerPlugin(NativeBiometric.class);
+    registerPlugin(NativeBiometricPlugin.class);
     // Others register plugins
 
     super.onCreate(savedInstanceState);
