@@ -36,7 +36,7 @@ public class NativeBiometricPlugin: CAPPlugin {
         let policy = useFallback ? LAPolicy.deviceOwnerAuthentication : LAPolicy.deviceOwnerAuthenticationWithBiometrics
         
         if context.canEvaluatePolicy(policy, error: &error){
-            switch context.biometricType {
+            switch context.biometryType {
                 case .touchID:
                     obj["biometricType"] = 1
                 case .faceID:
