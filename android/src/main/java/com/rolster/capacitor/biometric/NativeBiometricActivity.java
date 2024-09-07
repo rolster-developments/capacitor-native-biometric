@@ -71,7 +71,7 @@ public class NativeBiometricActivity extends AppCompatActivity {
           @Override
           public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
             super.onAuthenticationError(errorCode, errString);
-            int pluginErrorCode = AuthActivity.convertToPluginErrorCode(errorCode);
+            int pluginErrorCode = NativeBiometricActivity.convertToPluginErrorCode(errorCode);
             finishActivity("error", pluginErrorCode, errString.toString());
           }
 
