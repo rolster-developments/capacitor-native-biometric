@@ -306,15 +306,11 @@ public class NativeBiometricPlugin extends Plugin {
 
   @SuppressLint("NewAPI") // API level is already checked
   private Key generateKey(String KEY_ALIAS) throws GeneralSecurityException, IOException {
-    Key key;
-
     try {
-      key = generateKey(KEY_ALIAS, true);
-    } catch (StrongBoxUnavailableException e) {
-      key = generateKey(KEY_ALIAS, false);
+      return generateKey(KEY_ALIAS, true);
+    } catch (Exception e) {
+      return generateKey(KEY_ALIAS, false);
     }
-
-    return key;
   }
 
   private Key generateKey(String KEY_ALIAS, boolean isStrongBoxBacked)
