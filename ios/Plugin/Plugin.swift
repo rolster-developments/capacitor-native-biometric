@@ -2,11 +2,6 @@ import Foundation
 import Capacitor
 import LocalAuthentication
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitor.ionicframework.com/docs/plugins/ios
- */
-
 @objc(NativeBiometricPlugin)
 public class NativeBiometricPlugin: CAPPlugin {
     

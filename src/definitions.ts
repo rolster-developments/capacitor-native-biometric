@@ -21,9 +21,6 @@ export interface Credentials {
 }
 
 export interface IsAvailableOptions {
-  /**
-   * Specifies if should fallback to passcode authentication if biometric authentication is not available.
-   */
   useFallback: boolean;
 }
 
