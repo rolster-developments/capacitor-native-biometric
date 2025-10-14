@@ -8,14 +8,11 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricConstants;
 import androidx.biometric.BiometricPrompt;
 
 import java.util.concurrent.Executor;
 
 public class NativeBiometricActivity extends AppCompatActivity {
-  private Executor executor;
-
   private int maxAttempts;
 
   private int counter = 0;
@@ -26,6 +23,8 @@ public class NativeBiometricActivity extends AppCompatActivity {
     setContentView(R.layout.activity_auth_acitivy);
 
     maxAttempts = getIntent().getIntExtra("maxAttempts", 1);
+
+    Executor executor;
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
       executor = this.getMainExecutor();
@@ -79,7 +78,7 @@ public class NativeBiometricActivity extends AppCompatActivity {
           public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
             counter++;
-            
+
             if (counter == maxAttempts) {
               finishActivity("failed", 10, "Authentication failed.");
               counter = 0;
@@ -113,22 +112,22 @@ public class NativeBiometricActivity extends AppCompatActivity {
   @SuppressLint("RestrictedApi")
   public static int convertToPluginErrorCode(int errorCode) {
     switch (errorCode) {
-      case BiometricConstants.ERROR_HW_UNAVAILABLE:
-      case BiometricConstants.ERROR_HW_NOT_PRESENT:
+      case BiometricPrompt.ERROR_HW_UNAVAILABLE:
+      case BiometricPrompt.ERROR_HW_NOT_PRESENT:
         return 1;
-      case BiometricConstants.ERROR_LOCKOUT_PERMANENT:
+      case BiometricPrompt.ERROR_LOCKOUT_PERMANENT:
         return 2;
-      case BiometricConstants.ERROR_NO_BIOMETRICS:
+      case BiometricPrompt.ERROR_NO_BIOMETRICS:
         return 3;
-      case BiometricConstants.ERROR_LOCKOUT:
+      case BiometricPrompt.ERROR_LOCKOUT:
         return 4;
-      case BiometricConstants.ERROR_NO_DEVICE_CREDENTIAL:
+      case BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL:
         return 14;
-      case BiometricConstants.ERROR_TIMEOUT:
-      case BiometricConstants.ERROR_CANCELED:
+      case BiometricPrompt.ERROR_TIMEOUT:
+      case BiometricPrompt.ERROR_CANCELED:
         return 15;
-      case BiometricConstants.ERROR_USER_CANCELED:
-      case BiometricConstants.ERROR_NEGATIVE_BUTTON:
+      case BiometricPrompt.ERROR_USER_CANCELED:
+      case BiometricPrompt.ERROR_NEGATIVE_BUTTON:
         return 16;
       default:
         return 0;

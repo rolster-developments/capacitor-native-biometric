@@ -15,8 +15,8 @@ import android.security.keystore.StrongBoxUnavailableException;
 import android.util.Base64;
 
 import androidx.activity.result.ActivityResult;
-import androidx.biometric.BiometricConstants;
 import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
@@ -94,7 +94,7 @@ public class NativeBiometricPlugin extends Plugin {
     // https://developer.android.com/reference/androidx/biometric/BiometricManager#canAuthenticate(int)
     boolean fallbackAvailable = useFallback && this.deviceHasCredentials();
     if (useFallback && !fallbackAvailable) {
-      canAuthenticateResult = BiometricConstants.ERROR_NO_DEVICE_CREDENTIAL;
+      canAuthenticateResult = BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL;
     }
 
     boolean isAvailable = (canAuthenticateResult == BiometricManager.BIOMETRIC_SUCCESS || fallbackAvailable);
@@ -117,19 +117,19 @@ public class NativeBiometricPlugin extends Plugin {
 
     intent.putExtra("title", call.getString("title", "Authenticate"));
 
-    if (call.hasOption("subtitle")) {
+    if (call.getData().has("subtitle")) {
       intent.putExtra("subtitle", call.getString("subtitle"));
     }
 
-    if (call.hasOption("description")) {
+    if (call.getData().has("description")) {
       intent.putExtra("description", call.getString("description"));
     }
 
-    if (call.hasOption("negativeButtonText")) {
+    if (call.getData().has("negativeButtonText")) {
       intent.putExtra("negativeButtonText", call.getString("negativeButtonText"));
     }
 
-    if (call.hasOption("maxAttempts")) {
+    if (call.getData().has("maxAttempts")) {
       intent.putExtra("maxAttempts", call.getInt("maxAttempts"));
     }
 
@@ -160,7 +160,6 @@ public class NativeBiometricPlugin extends Plugin {
         call.resolve();
       } catch (GeneralSecurityException | IOException e) {
         call.reject("Failed to save credentials", e);
-        e.printStackTrace();
       }
     } else {
       call.reject("Missing properties");
